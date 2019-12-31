@@ -1,0 +1,24 @@
+{
+  "name": "sqlsugar.gmodel",
+  "version": "0.0.1",
+  "description": "from database to model for sqlsugar",
+  "main": "generator.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FQLin/sqlsugar.gmodel.git"
+  },
+  "keywords": [
+    "sqlsugar",
+    ".net",
+    "nodejs"
+  ],
+  "author": "FQLin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FQLin/sqlsugar.gmodel/issues"
+  },
+  "homepage": "https://github.com/FQLin/sqlsugar.gmodel#readme"
+}
