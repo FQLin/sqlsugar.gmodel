@@ -6,7 +6,7 @@ export class NullReferenceException extends Error {
         if (isPlainObject(err)) {
             errorMessage+=``
         }
-        console.log(err);
+        console.log(eval(err));
         super(message);
     }
 }

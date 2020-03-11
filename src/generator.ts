@@ -1,5 +1,6 @@
 import { ConnectionOptions } from "./driver/mssqlserver/ConnectionOptions";
 import { options } from "./driver/options";
+import {Request} from "mssql";
 
 const mssql = require("mssql");
 const { isPlainObject } = require("./func");
@@ -13,23 +14,22 @@ export function generate(options:options){
             throw new Error(`only accepts an options.connectionConfig object.`);
         }
 
-        if (this.connectionConfig.user === null) {
+        if (options.connectionOption.user === null) {
             throw new Error(`please set mssql connectionconfig user`);
         }
-        if (this.connectionConfig.password === null) {
+        if (options.connectionOption.password === null) {
             throw new Error(`please set mssql connectionconfig password`);
         }
-        if (this.connectionConfig.server === null) {
+        if (options.connectionOption.server === null) {
             throw new Error(`please set mssql connectionconfig server`);
         }
-        if (this.connectionConfig.database === null) {
+        if (options.connectionOption.database === null) {
             throw new Error(`please set mssql connectionconfig database`);
         }
     }
 
-    mssql.connect(this.connectionConfig).then(() => {
-        let request = new sql.Request();
-
-
+    
+    mssql.connect(options.connectionOption).then((obj:any) => {
+        console.log(obj);
     });
 }

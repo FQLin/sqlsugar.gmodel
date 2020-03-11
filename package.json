@@ -13,7 +13,8 @@
   "keywords": [
     "sqlsugar",
     ".net",
-    "nodejs"
+    "nodejs",
+    "orm"
   ],
   "author": "FQLin",
   "license": "ISC",
@@ -22,6 +23,9 @@
   },
   "homepage": "https://github.com/FQLin/sqlsugar.gmodel#readme",
   "dependencies": {
+    "@types/mssql": "^6.0.0",
+    "gulp": "^4.0.2",
+    "gulp-typescript": "^6.0.0-alpha.1",
     "mssql": "^6.0.1"
   },
   "devDependencies": {
