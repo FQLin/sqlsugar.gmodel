@@ -23,14 +23,14 @@
   },
   "homepage": "https://github.com/FQLin/sqlsugar.gmodel#readme",
   "dependencies": {
-    "@types/mssql": "^6.0.0",
+    "@types/mssql": "^6.0.1",
     "gulp": "^4.0.2",
     "gulp-typescript": "^6.0.0-alpha.1",
-    "mssql": "^6.0.1"
+    "mssql": "^6.2.0"
   },
   "devDependencies": {
-    "ts-node": "^8.5.4",
+    "ts-node": "^8.10.1",
     "tslint": "^5.20.1",
-    "typescript": "^3.7.4"
+    "typescript": "^3.8.3"
   }
 }
