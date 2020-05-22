@@ -1,25 +1,25 @@
 import { ConnectionOptions } from "./mssqlserver/ConnectionOptions"
 import { mappingDataType } from "./mappingDataType";
 
-export class options{
+export class Options{
 
     connectionOption: ConnectionOptions;
 
     nameSpace:string;
-    
+
     isDefaultValue:boolean;
-    
+
     isAttribute:boolean;
-    
+
     outputPath: string;
-    
+
     ignoreDiagram:boolean;
 
-    ignoreColumns:Object;
+    ignoreColumns:object;
 
-    mappingTables:Object;
+    mappingTables:object;
 
-    mappingColumns:Object;
+    mappingColumns:object;
 
     mappingDataType:mappingDataType;
 

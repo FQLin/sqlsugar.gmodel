@@ -2,11 +2,11 @@ import { ConnectionOptions } from "./driver/mssqlserver/ConnectionOptions";
 import { options } from "./driver/options";
 import {Request} from "mssql";
 
-const mssql = require("mssql");
-const { isPlainObject } = require("./func");
+import mssql = require("mssql");
+// import { isPlainObject } = require("./func");
 
 export function generate(options:options){
-    //验证 sql server 连接字符串配置
+    // 验证 sql server 连接字符串配置
     if (options === null) {
         throw new Error(`please set sql connectionconfig`);
     } else {
@@ -28,7 +28,7 @@ export function generate(options:options){
         }
     }
 
-    
+
     mssql.connect(options.connectionOption).then((obj:any) => {
         console.log(obj);
     });
