@@ -5,7 +5,10 @@
     ],
     "jsRules": {},
     "rules": {
-        "no-namespace":[false]
+        "no-namespace":[false],
+        "semicolon": [true, "always","ignore-interfaces"],
+        "indent": [true, "spaces", 4],
+        "no-console": [false]
     },
     "rulesDirectory": []
 }
