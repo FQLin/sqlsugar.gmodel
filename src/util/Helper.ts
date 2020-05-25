@@ -90,7 +90,7 @@ namespace Helper{
     };
 
     export const getDaysDiffBetweenDates=(dateInitial:Date,dateFinal:Date):number=>
-    (dateFinal - dateInitial)/(1000*3600*24);
+    (dateFinal.getTime() - dateInitial.getTime())/(1000*3600*24);
 
     export const httpGet=(url:string,callback:(r:string)=>{},err:(r:XMLHttpRequest)=>void=console.error):void=>{
         const request=new XMLHttpRequest();
@@ -110,5 +110,48 @@ namespace Helper{
     };
 
     // 21.如何为指定选择器创建具有指定范围，步长和持续时间的计数器？
+    export const counter=(selector:string,start:number,end:number,step:number=1,duration:number=2000):NodeJS.Timeout=>{
+        let current=start;
+        const _step=(end-start)*step<0?-step:step;
+        const timer=setInterval(()=>{
+            current+=_step;
+            const el=document.querySelector(selector);
+            if(el===null){
+                throw new ReferenceError(selector);
+            }else{
+                el.innerHTML=current.toString();
+                if(current>=end)el.innerHTML=end.toString();
+                if(current>=end)clearInterval(timer);
+            }
+        },Math.abs(Math.floor(duration/(end-start))));
+        return timer;
+    };
 
+    export const copyToClipboard=(str:string):void=>{
+        const el=document.createElement("textarea");
+        el.value=str;
+        el.setAttribute("readonly","");
+        el.style.position="absolute";
+        el.style.left="-9999px";
+        document.body.appendChild(el);
+        const selection:Selection | null=document.getSelection();
+        let selected:boolean=false;
+        let range:Range|null=null;
+        if(selection&&selection.rangeCount>0){
+            selected=true;
+            range=selection.getRangeAt(0);
+        }
+        el.select();
+        document.execCommand("copy");
+        document.body.removeChild(el);
+        if(selected&&range!==null){
+            selection?.removeAllRanges();
+            selection?.addRange(range);
+        }
+    };
+
+    export const isBrowserTabFocused=():boolean=>!document.hidden;
+
+    const fs=require("fs");
+    export const createDirIfNotExists=(dir:string):void=>(!fs.existsSync(dir)?fs.mkdirSync(dir):undefined);
 }
