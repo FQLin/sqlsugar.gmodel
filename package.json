@@ -4,7 +4,8 @@
   "description": "from database to model for sqlsugar",
   "main": "generator.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "watch-dev":"cross-env NODE_ENV=development nodemon -d ts,tsx"
   },
   "repository": {
     "type": "git",

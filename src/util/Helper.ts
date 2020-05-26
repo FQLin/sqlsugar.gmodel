@@ -44,11 +44,11 @@ namespace Helper{
 
     export const currentURL=():string=>window.location.href;
 
-    export const getURLParameters=(url:string):object=>
+    /*export const getURLParameters=(url:string):object=>
     (url.match(/([^?=&]+)(=([^&]*))/g) || []).reduce(
         (a,v)=>((a[v.slice(0,v.indexOf("="))]=v.slice(v.indexOf("=")+1)),a),
         {}
-    );
+    );*/
 
     export const formToObject=(form:HTMLFormElement):object=>
     Array.from(new FormData(form)).reduce(
@@ -90,7 +90,7 @@ namespace Helper{
     };
 
     export const getDaysDiffBetweenDates=(dateInitial:Date,dateFinal:Date):number=>
-    (dateFinal - dateInitial)/(1000*3600*24);
+    (dateFinal.getTime() - dateInitial.getTime())/(1000*3600*24);
 
     export const httpGet=(url:string,callback:(r:string)=>{},err:(r:XMLHttpRequest)=>void=console.error):void=>{
         const request=new XMLHttpRequest();
