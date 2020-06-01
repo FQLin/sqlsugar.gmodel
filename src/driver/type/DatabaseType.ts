@@ -1,4 +1,6 @@
 export enum DatabaseType {
     sqlserver,
-    mysql
+    mysql,
+    oracle,
+    sqlite
 }
