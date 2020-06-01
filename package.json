@@ -5,8 +5,8 @@
   "main": "generator.js",
   "scripts": {
     "start": "npm run serve",
-    "build":"tsc",
-    "watch-dev":"cross-env NODE_ENV=development nodemon -e ts,tsx --exec 'ts-node' ./server.ts"
+    "build": "tsc",
+    "watch-dev": "cross-env NODE_ENV=development nodemon -e ts,tsx --exec 'ts-node' ./server.ts"
   },
   "repository": {
     "type": "git",
