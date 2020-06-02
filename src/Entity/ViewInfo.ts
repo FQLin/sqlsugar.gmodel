@@ -1,0 +1,1 @@
+export { TableInfo as ViewInfo } from "./TableInfo";

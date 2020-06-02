@@ -6,24 +6,4 @@ export interface IBaseConnectionOptions{
      */
     readonly type:DatabaseType;
 
-    /**
-     * user
-     */
-    user:string;
-
-    /**
-     * password
-     */
-    password: string;
-
-    /**
-     * server
-     */
-    server: string;
-
-    /**
-     * database
-     */
-    database: string;
-
 }

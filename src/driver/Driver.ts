@@ -1,6 +1,7 @@
 import { IBaseConnectionOptions } from "../connection/IBaseConnectionOptions";
 import { DynamicType } from "../matedata/type/DynamicType";
-import { required } from "../decorators/required";
+import { required } from "../decorators/property/required";
+import { IConnectionOptions as SqlServerConnectionOptions } from "./sqlserver/IConnectionOptions";
 
 export class Driver{
 
@@ -8,7 +9,7 @@ export class Driver{
      * 链接配置
      */
     @required
-    connectionOptions!: IBaseConnectionOptions;
+    connectionOptions!: SqlServerConnectionOptions;
 
     /**
      * 命名空间
@@ -74,6 +75,4 @@ export class Driver{
             CreateUser:"UserDate"
         }
     };
-
-
 }
