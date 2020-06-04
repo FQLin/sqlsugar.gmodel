@@ -1,3 +1,5 @@
+import { ColumnInfo } from "./ColumnInfo";
+
 export class TableInfo{
     /**
      * table view name
@@ -8,4 +10,9 @@ export class TableInfo{
      * table view description
      */
     Description?:string;
+
+    /**
+     * table column
+     */
+    Columns: ColumnInfo[]=new Array<ColumnInfo>();
 }

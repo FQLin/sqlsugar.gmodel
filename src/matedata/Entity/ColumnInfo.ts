@@ -1,4 +1,4 @@
-export class RowInfo{
+export class ColumnInfo{
     /**
      * table name
      */
