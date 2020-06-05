@@ -1,16 +1,7 @@
-import { IBaseConnectionOptions } from "../connection/IBaseConnectionOptions";
 import { DynamicType } from "../matedata/type/DynamicType";
 import { required } from "../decorators/property/required";
-import { IConnectionOptions as SqlServerConnectionOptions } from "./sqlserver/IConnectionOptions";
 
-export class Driver{
-
-    /**
-     * 链接配置
-     */
-    @required
-    connectionOptions!: SqlServerConnectionOptions;
-
+export class BaseCreateOptions{
     /**
      * 命名空间
      */

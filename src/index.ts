@@ -10,9 +10,11 @@ import { Database } from "./matedata/Database";
 import { IQuerySQL } from "./matedata/SQL/IQuerySQL";
 import { SqlServerSQL } from "./matedata/SQL/SqlServerSQL";
 import { TableInfo } from "./matedata/Entity/TableInfo";
+import { DynamicType } from "./matedata/type/DynamicType";
+import { CreateOptions } from "./optoins/CreateOptions";
 
 export class Gmodel{
-    private options:Driver;
+    private options:CreateOptions;
     private context:IDBContext;
     private readonly _querySQL:IQuerySQL;
 
@@ -24,7 +26,7 @@ export class Gmodel{
     private finalUsing:string="";
     private finalClassName:string="";
 
-    constructor(@requiredParam opt:Driver){
+    constructor(@requiredParam opt:CreateOptions){
         this.options=opt;
         switch (this.options.connectionOptions.type) {
             case DatabaseType.sqlserver:
@@ -86,47 +88,48 @@ export class Gmodel{
      * 类字符串
      * @param tableInfo table info
      */
-    async getClassString(tableInfo:TableInfo) {
+    async getClassString(tableInfo:TableInfo):Promise<string> {
         let classText = CSharpTemplate.ClassTemplate;
         this.finalUsing = CSharpTemplate.UsingTemplate;
         this.finalClassName = tableInfo.Name;
         // 自定义数据类型的命名空间
         if(this.options.mappingDataType && this.options.mappingDataType[tableInfo.Name] instanceof Object/* && this.options.mappingDataType.nameSpace*/){
-            const mappingNameSpace=this.options.mappingDataType.nameSpace;
-            if(mappingNameSpace){
-                // 判断一下要添加的命名空间引用是否已经存在
-                if(this.finalUsing.indexOf(`using ${mappingNameSpace};`) === -1){
-                    this.finalUsing += `using ${mappingNameSpace};\r\n`;
+            const mapping = this.options.mappingDataType[tableInfo.Name] as DynamicType;
+            if(mapping){
+                const mappingNameSpace=this.options.mappingDataType.nameSpace;
+                if(mappingNameSpace){
+                    // 判断一下要添加的命名空间引用是否已经存在
+                    if(this.finalUsing.indexOf(`using ${mappingNameSpace};`) === -1){
+                        this.finalUsing += `using ${mappingNameSpace};\r\n`;
+                    }
                 }
-            }
-
-            const mappingTable=this.options.mappingDataType[tableInfo.Name].nameSpace;
-            const classUsing=m.nameSpace;
-            if(classUsing && this.finalUsing.indexOf(`using ${classUsing};`) === -1){
-                this.finalUsing += `using ${classUsing};\r\n`;
+                const typeNameSpace=mapping.nameSpace;
+                if(typeNameSpace && this.finalUsing.indexOf(`using ${typeNameSpace};`) === -1){
+                    this.finalUsing += `using ${typeNameSpace};\r\n`;
+                }
             }
         }
         // 设置了不同的映射关系
-        if (this.mappingTables[tableInfo.Name]) {
-            const entityName=this.mappingTables[tableInfo.Name];
+        if (this.options.mappingTables && this.options.mappingTables[tableInfo.Name] instanceof Object) {
+            const entityName=this.options.mappingTables[tableInfo.Name] as string;
             this.finalClassName = entityName;
-            classText = classText.replace(new RegExp(DbFirstTemplate.KeyClassName,'g'),entityName);
-            classText = classText.replace(new RegExp(DbFirstTemplate.KeySugarTable,'g'),(DbFirstTemplate.ValueSugarTable.replace("{0}", tableInfo.Name)));
+            classText = classText.replace(new RegExp(CSharpTemplate.KeyClassName,'g'),entityName);
+            classText = classText.replace(new RegExp(CSharpTemplate.KeySugarTable,'g'),(CSharpTemplate.ValueSugarTable.replace("{0}", tableInfo.Name)));
         }
 
-        const columnInfo = await this.getColumnInfosByTableName(tableInfo);
+        // const columnInfo = await this.getColumnInfosByTableName(tableInfo);
         // 忽略列
-        if (this.ignoreColumns.length > 0) {
+        if (this.options.ignoreColumns && this.options.ignoreColumns[tableInfo.Name] instanceof Object) {
 
         }
 
-        let constructorText = this.isDefaultValue ? this.ConstructorTemplate : null;
+        let constructorText = this.options.isConstructor ? CSharpTemplate.ConstructorTemplate : null;
 
-        classText = classText.replace(new RegExp(DbFirstTemplate.KeyClassName,'g'), this.finalClassName);
-        classText = classText.replace(new RegExp(DbFirstTemplate.KeyNamespace,'g'), this.namespace);
+        classText = classText.replace(new RegExp(CSharpTemplate.KeyClassName,'g'), this.finalClassName);
+        classText = classText.replace(new RegExp(CSharpTemplate.KeyNamespace,'g'), this.options.nameSpace);
         // classText = classText.replace(new RegExp(DbFirstTemplate.KeyUsing,'g'), this.UsingTemplate);
-        classText = classText.replace(new RegExp(DbFirstTemplate.KeyClassDescription,'g'), this.ClassDescriptionTemplate.replace(new RegExp(DbFirstTemplate.KeyClassDescription,'g'), tableInfo.Description + "\r\n"));
-        classText = classText.replace(new RegExp(DbFirstTemplate.KeySugarTable,'g'), this.IsAttribute ? (DbFirstTemplate.ValueSugarTable.replace("{0}", tableInfo.Name)) : "");
+        classText = classText.replace(new RegExp(CSharpTemplate.KeyClassDescription,'g'), this.ClassDescriptionTemplate.replace(new RegExp(DbFirstTemplate.KeyClassDescription,'g'), tableInfo.Description + "\r\n"));
+        classText = classText.replace(new RegExp(CSharpTemplate.KeySugarTable,'g'), this.IsAttribute ? (DbFirstTemplate.ValueSugarTable.replace("{0}", tableInfo.Name)) : "");
         if (columnInfo) {
             columnInfo.forEach((item, index) => {
                 const isLast = columnInfo.Length === (index + 1);

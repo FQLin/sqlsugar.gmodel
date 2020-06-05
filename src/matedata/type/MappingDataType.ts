@@ -1,6 +1,6 @@
 import { DynamicType } from "./DynamicType";
 
 export class MappingDataType{
-    // nameSpace:string | undefined;
-    [Key:string]:DynamicType|undefined;
+    // nameSpace:string;
+    [Key:string]: object|string|undefined;
 }

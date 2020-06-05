@@ -1,6 +1,7 @@
 import { ColumnInfo } from "./ColumnInfo";
 
 export class TableInfo{
+    private _classString!:string;
     /**
      * table view name
      */
@@ -15,4 +16,8 @@ export class TableInfo{
      * table column
      */
     Columns: ColumnInfo[]=new Array<ColumnInfo>();
+
+    public get ClassString():string{
+        return "";
+    }
 }
