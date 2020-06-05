@@ -5,3 +5,5 @@
 
 npm install tslint typescript -g
 全局安装 tslint typescript
+
+推荐工具 ts-node-dev
